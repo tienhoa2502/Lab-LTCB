@@ -1,5 +1,10 @@
 #include <iostream>
 #include <algorithm>
+#include <string>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
 using namespace std;
 
 ///-------CƠ BẢN--------- 
@@ -34,6 +39,25 @@ void huyNPhanTu(int A[], int &N, int p, int n) {
     N = N - n;
 }
 
+// Hàm chèn mảng B vào mảng A tại vị trí p
+void chenMang(int A[], int &N, int B[], int M, int p) {
+    if (p < 0 || p > N) {
+        cout << "Vi tri chen khong hop le." << endl;
+        return;
+    }
+
+    for (int i = N + M - 1; i >= p + M; --i) {
+        A[i] = A[i - M];
+    }
+
+    for (int i = 0; i < M; ++i) {
+        A[p + i] = B[i];
+    }
+
+    N += M;
+}
+
+
 // - Bài 1b: Số nguyên tố
 bool soNguyenTo(int num) {
     if (num <= 1) {
@@ -49,6 +73,72 @@ bool soNguyenTo(int num) {
     return true;
 }
 
+struct NHANVIEN {
+int MaNV;
+string HoTen;
+string DiaChi;
+bool CBQL;
+};
+// Hàm nhập thông tin của một nhân viên
+void nhapNhanVien(NHANVIEN &nv) {
+    cout << "Nhap MaNV: ";
+    cin >> nv.MaNV;
+    cin.ignore(); // Đọc bỏ dấu Enter sau khi nhập MaNV
+
+    cout << "Nhap HoTen: ";
+    getline(cin, nv.HoTen);
+
+    cout << "Nhap DiaChi: ";
+    getline(cin, nv.DiaChi);
+
+    cout << "Nhap CBQL (1: Co, 0: Khong): ";
+    cin >> nv.CBQL;
+}
+
+// Hàm nhập thông tin của n nhân viên và xóa những nhân viên không là cán bộ quản lý
+void nhapDanhSachNhanVienVaXoaKhongCBQL(NHANVIEN danhSachNV[], int &n) {
+for (int i = 0; i < n; ++i) {
+    cout << "Nhap thong tin nhan vien thu " << i + 1 << ":" << endl;
+    nhapNhanVien(danhSachNV[i]);
+}
+
+int i = 0;
+while (i < n) {
+    if (!danhSachNV[i].CBQL) {
+        for (int j = i; j < n - 1; ++j) {
+            danhSachNV[j] = danhSachNV[j + 1];
+        }
+        --n;
+    } else {
+        ++i;
+    }
+}
+    }
+// Hàm chèn nhân viên mới vào danh sách tại vị trí k
+void chenNhanVien(NHANVIEN danhSachNV[], int &n, NHANVIEN nvMoi, int k) {
+if (k < 0 || k > n) {
+    cout << "Vi tri chen khong hop le." << endl;
+    return;
+}
+
+for (int i = n; i > k; --i) {
+    danhSachNV[i] = danhSachNV[i - 1];
+}
+
+danhSachNV[k] = nvMoi;
+++n;
+}
+    bool laSoNguyenTo(int num) {
+if (num <= 1) {
+    return false;
+}
+for (int i = 2; i <= sqrt(num); ++i) {
+    if (num % i == 0) {
+        return false;
+    }
+}
+return true;
+}
 
 
 
@@ -244,21 +334,78 @@ int main() {
             }
             case 7:
             {
-
+                
                 break;
             }
             case 8:
             {
-                
+                int n;
 
+                cout << "Số lượng nhân viên: ";
+                cin >> n;
+
+                NHANVIEN danhSachNV[100];
+
+                for (int i = 0; i < n; ++i) {
+                    cout << "Thông tin nhân viên " << i + 1 << ":" << endl;
+                    nhapNhanVien(danhSachNV[i]);
+                }
+
+                cout << "Nhân viên là CBQL:" << endl;
+                for (int i = 0; i < n; ++i) {
+                    if (danhSachNV[i].CBQL) {
+                        cout << danhSachNV[i].HoTen << endl;
+                    }
+                }
                 break;
             }
             case 9:
             {
+                int n;
+
+                cout << "Số lượng nhân viên: ";
+                cin >> n;
+
+                NHANVIEN danhSachNV[100]; // Giả sử tối đa 100 nhân viên
+
+                nhapDanhSachNhanVienVaXoaKhongCBQL(danhSachNV, n);
+
+                cout << "Danh sách nhân viên sau khi xóa CBQL:" << endl;
+                for (int i = 0; i < n; ++i) {
+                    cout << "MaNV: " << danhSachNV[i].MaNV << ", HoTen: " << danhSachNV[i].HoTen
+                        << ", DiaChi: " << danhSachNV[i].DiaChi << ", CBQL: " << danhSachNV[i].CBQL << endl;
+                }
                 break;
             }
             case 10:
             {
+                int n;
+
+                cout << "Số lượng nhân viên: ";
+                cin >> n;
+
+                NHANVIEN danhSachNV[100]; // Giả sử tối đa 100 nhân viên
+
+                for (int i = 0; i < n; ++i) {
+                    cout << "Thông tin nhân viên " << i + 1 << ":" << endl;
+                    nhapNhanVien(danhSachNV[i]);
+                }
+
+                NHANVIEN nvMoi;
+                cout << "Thông tin nhân viên mới" << endl;
+                nhapNhanVien(nvMoi);
+
+                int k;
+                cout << "Vị trí k cần chèn";
+                cin >> k;
+
+                chenNhanVien(danhSachNV, n, nvMoi, k);
+
+                cout << "Danh sách sau khi chèn" << endl;
+                for (int i = 0; i < n; ++i) {
+                    cout << "MaNV: " << danhSachNV[i].MaNV << ", HoTen: " << danhSachNV[i].HoTen
+                        << ", DiaChi: " << danhSachNV[i].DiaChi << ", CBQL: " << danhSachNV[i].CBQL << endl;
+                }
                 break;
             }
             case 0:
