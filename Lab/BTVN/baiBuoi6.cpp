@@ -35,30 +35,30 @@ int main(){
     return 0;
 
 }
-// // Hàm xuất kí tự hoa
-// void xuatKiTuHoa(const string& str) {
-//     cout << "Cac ki tu in hoa trong chuoi la: ";
-//     for (char ch : str) {
-//         if (isupper(ch)) {
-//             cout << ch << " ";
-//         }
-//     }
-//     cout << endl;
-// }
+// Hàm xuất kí tự hoa
+void xuatKiTuHoa(const string& str) {
+    cout << "Cac ki tu in hoa trong chuoi la: ";
+    for (char ch : str) {
+        if (isupper(ch)) {
+            cout << ch << " ";
+        }
+    }
+    cout << endl;
+}
 
-// // Đảo kí tự chuỗi
-// void reverseString(string& str) {
-//     int left = 0;
-//     int right = str.length() - 1;
+// Đảo kí tự chuỗi
+void reverseString(string& str) {
+    int left = 0;
+    int right = str.length() - 1;
     
-//     while (left < right) {
-//         char temp = str[left];
-//         str[left] = str[right];
-//         str[right] = temp;
-//         left++;
-//         right--;
-//     }
-// }
+    while (left < right) {
+        char temp = str[left];
+        str[left] = str[right];
+        str[right] = temp;
+        left++;
+        right--;
+    }
+}
 
 // int main() {
 
@@ -86,12 +86,12 @@ int main(){
 //             }
 //             case 2:
 //             {
-//                 string nhap;
-//                 cout << "Nhap chuoi: ";
-//                 getline(cin, nhap);
+                string nhap;
+                cout << "Nhap chuoi: ";
+                getline(cin, nhap);
 
-//                 xuatKiTuHoa(nhap);
-//                 break;
+                xuatKiTuHoa(nhap);
+                break;
 //             }
 //             case 3:
 //             {
